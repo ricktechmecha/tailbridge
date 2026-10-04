@@ -16,6 +16,12 @@ El nodo puede ser Android/Termux, un Linux dentro de Android (proot) o un Linux 
 - 🤖 Base para control del teléfono con IA vía ADB + un MCP server (ver `setup/04-adb-wireless.md`).
 - 🐧 Funciona en Linux real o en proot dentro de Android (`setup/05-proot-linux.md`).
 
+## Requisitos
+- **Hub**: macOS o Linux con SSH server, `bash`, `scp`, y Tailscale.
+- **Nodo**: Android (Termux de F-Droid), Linux en proot, o Linux normal. Con SSH server y Tailscale.
+- **Tailscale** en ambos equipos (cuenta gratuita, hasta 100 dispositivos).
+- Opcional: `nmap` (para `net-scan`), `mosh` (roaming), ADB (control de pantalla).
+
 ## Instalación rápida
 ```bash
 git clone <este-repo> tailbridge && cd tailbridge

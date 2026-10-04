@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Traer archivo/carpeta del nodo al hub. Uso: from-node <ruta-nodo> [destino]
+set -euo pipefail
 . "$(dirname "$0")/_lib.sh"
-SRC="$1"; DST="${2:-$SHARED_DIR/}"
+SRC="${1:-}"; DST="${2:-$SHARED_DIR/}"
 [ -z "$SRC" ] && { echo "Uso: from-node <ruta-nodo> [destino]"; exit 1; }
 scp -r $SCP_NODE_FLAG "${NODE_USER}@${NODE_IP}:$SRC" "$DST" && echo "✓ Traído a $DST"

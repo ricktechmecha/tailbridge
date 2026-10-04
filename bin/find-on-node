@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Buscar un archivo en el nodo. Uso: find-on-node <patron>
+set -euo pipefail
 . "$(dirname "$0")/_lib.sh"
-[ -z "$1" ] && { echo "Uso: find-on-node <patron>"; exit 1; }
+[ -z "${1:-}" ] && { echo "Uso: find-on-node <patron>"; exit 1; }
 # En Termux añade /sdcard; en Linux/proot busca en $HOME
-"${SSH_NODE[@]}" "find \$HOME /sdcard /storage/emulated/0 -iname '*$1*' 2>/dev/null | head -50"
+"${SSH_NODE[@]}" "find \$HOME /sdcard /storage/emulated/0 -iname '*$1*' 2>/dev/null | head -50" || echo "(sin resultados)"

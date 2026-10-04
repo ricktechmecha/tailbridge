@@ -2,6 +2,7 @@
 # Escáner de red HÍBRIDO: descubre hosts usando la red del NODO,
 # el análisis/reporte se arma en el HUB. Uso: net-scan [rango]
 # Solo redes propias.
+set -euo pipefail
 . "$(dirname "$0")/_lib.sh"
 OUT="$SHARED_DIR/net-scan-$(date +%Y%m%d-%H%M%S).txt"
 "${SSH_NODE[@]}" 'command -v nmap >/dev/null || { command -v pkg >/dev/null && pkg install -y nmap || sudo apt-get install -y nmap; }' >/dev/null 2>&1
