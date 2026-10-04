@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Enviar archivo/carpeta del hub al nodo. Uso: to-node <ruta> [destino]
+. "$(dirname "$0")/_lib.sh"
+SRC="$1"; DST="${2:-~/}"
+[ -z "$SRC" ] && { echo "Uso: to-node <ruta> [destino]"; exit 1; }
+scp -r $SCP_NODE_FLAG "$SRC" "${NODE_USER}@${NODE_IP}:$DST" && echo "✓ Enviado al nodo"

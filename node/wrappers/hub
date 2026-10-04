@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Entra a la sesión persistente del hub (o lanza un comando ahí).
+# Config: edita estas dos líneas con tu hub.
+HUB="${HUB_USER:?define HUB_USER}@${HUB_IP:?define HUB_IP}"
+if [ -z "$1" ]; then exec ssh -t "$HUB" "tmux attach -t main || tmux new -s main || screen -d -r || bash"
+else exec ssh "$HUB" "$@"; fi

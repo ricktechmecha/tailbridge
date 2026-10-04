@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Escáner de red HÍBRIDO: descubre hosts usando la red del NODO,
+# el análisis/reporte se arma en el HUB. Uso: net-scan [rango]
+# Solo redes propias.
+. "$(dirname "$0")/_lib.sh"
+OUT="$SHARED_DIR/net-scan-$(date +%Y%m%d-%H%M%S).txt"
+"${SSH_NODE[@]}" 'command -v nmap >/dev/null || { command -v pkg >/dev/null && pkg install -y nmap || sudo apt-get install -y nmap; }' >/dev/null 2>&1
+RANGE="$1"
+if [ -z "$RANGE" ]; then
+  RANGE=$("${SSH_NODE[@]}" "(ip -4 addr 2>/dev/null || ifconfig 2>/dev/null) | grep -oE 'inet (addr:)?192\.168\.[0-9]+\.[0-9]+' | head -1 | grep -oE '192\.168\.[0-9]+' | head -1")".0/24"
+fi
+[ "$RANGE" = ".0/24" ] && { echo "No detecté subred; pásala: net-scan 192.168.1.0/24"; exit 1; }
+echo "▶ Hosts vivos en $RANGE (red del nodo)..."
+HOSTS=$("${SSH_NODE[@]}" "nmap -sn $RANGE 2>/dev/null | grep -oE '([0-9]+\.){3}[0-9]+' | tr '\n' ' '")
+echo "   $HOSTS"
+echo "▶ Puertos abiertos en los hosts vivos..."
+{ echo "# net-scan $RANGE  $(date)"; echo "# hosts: $HOSTS"; echo
+  "${SSH_NODE[@]}" "nmap -F --open -T4 $HOSTS 2>/dev/null"; } > "$OUT"
+awk '/Nmap scan report/{h=$NF} /\/tcp .*open/{print h"  "$1"  "$3}' "$OUT"
+echo "Reporte: $OUT"

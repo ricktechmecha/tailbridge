@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Sube un archivo del nodo al hub. Uso: to-hub <ruta> [destino]
+HUB="${HUB_USER:?}@${HUB_IP:?}"; SRC="$1"; DST="${2:-~/}"
+scp -r "$SRC" "$HUB:$DST" && echo "✓ subido al hub"

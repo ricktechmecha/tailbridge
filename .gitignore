@@ -1,0 +1,29 @@
+# Secretos y config local — NUNCA subir
+.env
+*.env
+!.env.example
+# Llaves y keystores
+*.keystore
+*.jks
+*.pem
+*.key
+id_*
+*_rsa
+*_ed25519
+authorized_keys
+known_hosts
+# Credenciales
+**/CREDENCIALES*
+**/credentials*
+**/.credentials*
+secrets*
+# Build Android
+local.properties
+build/
+.gradle/
+*.apk
+# Sistema
+.DS_Store
+*.log
+node_modules/
+__pycache__/

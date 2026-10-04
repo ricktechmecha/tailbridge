@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Ejecutar un comando en el nodo. Uso: on-node "<comando>"
+. "$(dirname "$0")/_lib.sh"
+[ -z "$1" ] && { echo 'Uso: on-node "<comando>"'; exit 1; }
+exec "${SSH_NODE[@]}" "$@"

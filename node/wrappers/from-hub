@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Baja un archivo del hub al nodo. Uso: from-hub <ruta-hub> [destino]
+HUB="${HUB_USER:?}@${HUB_IP:?}"; SRC="$1"; DST="${2:-$HOME/}"
+scp -r "$HUB:$SRC" "$DST" && echo "✓ bajado al nodo"
